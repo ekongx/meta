@@ -241,6 +241,9 @@ Google Chrome Frame是Google推出的一款免费的Internet Explorer专用插�
 
 * **添加智能 App 广告条 Smart App Banner：** 告诉浏览器这个网站对应的app，并在页面上显示下载banner(如下图)。
 
+```html
+<meta name="apple-itunes-app" content="app-id=myAppStoreID, affiliate-data=myAffiliateData, app-argument=myURL"> 
+```
 ![view1](https://cloud.githubusercontent.com/assets/3378002/15988549/d90954ec-3087-11e6-8efb-a1447e01a167.png)
 
 * **IOS相关**
