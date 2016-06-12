@@ -1,60 +1,109 @@
 ## 常用meta整理
 
-### 概要
+## 定义与用法
 
-标签提供关于HTML文档的元数据。元数据不会显示在页面上，但是对于机器是可读的。它可用于浏览器（如何显示内容或重新加载页面），搜索引擎（关键词），或其他 web 服务。
+* `<meta>` 元素可提供有关页面的元信息（meta-information），比如针对搜索引擎和更新频度的描述和关键词。
+* `<meta>` 标签位于文档的头部，不包含任何内容。
+* `<meta>` 标签的属性定义了与文档相关联的名称/值对。
 
-
-### 必要属性
-
-属性    | 值         | 描述
---------|------------|----
-content | some text  | 定义与http-equiv或name属性相关的元信息
-
-### 可选属性
+## 属性
 
 属性 | 值 | 描述
 ----|------|----
-name | author / description / keywords / generator / revised / others  | 把 content 属性关联到一个名称。
-http-equiv | content-type / expire / refresh / set-cookie  | 把content属性关联到HTTP头部。
-content | some text  | 定义用于翻译 content 属性值的格式。
+charset | character_set  | 定义文档的字符编码。
+http-equiv | content-type / expire / refresh  | 把content属性关联到HTTP头部。
+name | application-name / author / description / generator / keywords  | 把 content 属性关联到一个名称。
+content | text | 定义与 http-equiv 或 name 属性相关的元信息。
 
+## meta属性分组
+
+* **name属性与content属性**
+
+    `name属性`用于描述网页,它是以名称/值形式的名称，name属性的值所描述的内容(值)通过content属性表示，便于搜索引擎机器人查找分类。其中最重要的是description,keywords和robots。
+    
+    `例如`
+    ```html
+    <meta name="keywords" content="HTML, CSS, XML, XHTML, JavaScript">
+    ```
+
+* **http-equiv属性与content属性**
+
+    `http-equiv属性`用于提供HTTP协议的响应头报文(MIME文档头),它是以名称/值形式的名称,http-equiv属性的值所描述的内容(值)通过content属性表示，通常为网页加载前提供给浏览器等设备使用.其中最重要的是content-type charset 提供编码信息，refresh刷新与跳转页面，no-cache 页面缓存，expires网页缓存过期时间。
+    
+    `例如`    
+    ```html
+    <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+    ```
+
+---
+
+#### HTML 4.01 与 HTML 5 之间的差异
+1. 在 HTML 5 中，不再支持 scheme 属性。
+2. 在 HTML 5 中，有一个新的 charset 属性，它使字符集的定义更加容易。
+3. 在 HTML 4.01 中，不得不这么写：
+
+```html
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+```
+在 HTML 5 中，这样就够了：
+```html
+<meta charset="ISO-8859-1">
+```
+
+## 下面以相关性分别介绍用法：
 
 ### 网页相关
 
-* **申明编码**
+* **编码格式**
 
-```html
-<!DOCTYPE html> <!-- 使用 HTML5 doctype，不区分大小写 -->
-<html lang="zh-cmn-Hans"> <!-- 更加标准的 lang 属性写法 http://zhi.hu/XyIa -->
-```
 
 ```html
 <meta charset='utf-8' />
 ```
 
-* **优先使用 IE 最新版本和 Chrome**
+* **优先使用 IE 最新版本和 Chrome：** X-UA-Compatible是自从IE8新加的一个设置，对于IE8以下的浏览器是不识别的。 通过在meta中设置X-UA-Compatible的值，可以指定网页的兼容性模式设置。
 
 ```html
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<!-- 关于X-UA-Compatible -->
-<meta http-equiv="X-UA-Compatible" content="IE=6" ><!-- 使用IE6 -->
-<meta http-equiv="X-UA-Compatible" content="IE=7" ><!-- 使用IE7 -->
-<meta http-equiv="X-UA-Compatible" content="IE=8" ><!-- 使用IE8 -->
+<meta http-equiv="X-UA-Compatible" content="IE=7">  
+<!--以上代码告诉IE浏览器，无论是否用DTD声明文档标准，IE8/9都会以IE7引擎来渲染页面。  -->
+<meta http-equiv="X-UA-Compatible" content="IE=8">  
+<!--以上代码告诉IE浏览器，IE8/9都会以IE8引擎来渲染页面。 --> 
+<meta http-equiv="X-UA-Compatible" content="IE=edge">  
+<!--以上代码告诉IE浏览器，IE8/9及以后的版本都会以最高版本IE来渲染页面。-->  
+<meta http-equiv="X-UA-Compatible" content="IE=7,IE=9">  
+<meta http-equiv="X-UA-Compatible" content="IE=7,9">  
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+<!--以上代码IE=edge告诉IE使用最新的引擎渲染网页，chrome=1则可以激活Chrome Frame.-->
 ```
+`Chrome Frame 介绍：`
+Google Chrome Frame是Google推出的一款免费的Internet Explorer专用插件。使用此插件，用户可以通过Internet Explorer的用户界面，以Chrome内核的渲染方式浏览网页。[Google Chrome Frame百科](http://baike.baidu.com/view/2831140.htm)
 
-* **浏览器内核控制：** 国内浏览器很多都是双内核（webkit和Trident），webkit内核高速浏览，IE内核兼容网页和旧版网站。而添加meta标签的网站可以控制浏览器选择何种内核渲染
+* **浏览器内核控制：** renderer是为双核浏览器准备的，用于指定双核浏览器默认以何种方式渲染页面,国内浏览器很多都是双内核（webkit和Trident），webkit内核高速浏览，IE内核兼容网页和旧版网站。而添加meta标签的网站可以控制浏览器首先选择何种内核进行渲染
 
+1. 若页面需默认用极速核，增加标签：
+```html
+<meta name="renderer" content="webkit">
+```
+2. 若页面需默认用ie兼容内核，增加标签：
+```hmtl
+<meta name="renderer" content="ie-comp">
+```
+3. 若页面需默认用ie标准内核，增加标签：
+```html
+<meta name="renderer" content="ie-stand">
+```
+4. 同时我们也可以同时指定多个内核名称，之间以符号”|”进行分隔,此时浏览器将会按照从左到右的先后顺序选择其具备的渲染内核来处理当前网页。
 ```html
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
 ```
 
-国内双核浏览器默认内核模式如下：
+5. 规定360安全浏览器使用webki内核进行渲染
 
-1. 搜狗高速浏览器、QQ浏览器：IE内核（兼容模式）
-2. 360极速浏览器、遨游浏览器：Webkit内核（极速模式）
+```html
+<meta name="renderer" content="webkit">
+```
 
-* **禁止浏览器从本地计算机的缓存中访问页面内容：** 这样设定，访问者将无法脱机浏览。
+* **禁止浏览器从本地计算机的缓存中访问页面内容：** 不缓存页面(为了提高速度，一些浏览器会缓存浏览者浏览过的页面，通过下面的定义，浏览器一般不会缓存页面,而且浏览器无法脱机浏览。)
 
 ```html
 <meta http-equiv="Pragma" content="no-cache">
@@ -66,16 +115,6 @@ content | some text  | 定义用于翻译 content 属性值的格式。
 <meta http-equiv="Cache-Control" content="max-age=604800" />
 ```
 
-* **站点适配：** 主要用于PC-手机页的对应关系。
-
-
-```html
-<meta name="mobile-agent"content="format=[wml|xhtml|html5]; url=url">
-<!--
-[wml|xhtml|html5]根据手机页的协议语言，选择其中一种；
-url="url" 后者代表当前PC页所对应的手机页URL，两者必须是一一对应关系。
- -->
-```
 
 * **申明网站为pc站，避免被转码：** 
 
@@ -83,17 +122,12 @@ url="url" 后者代表当前PC页所对应的手机页URL，两者必须是一�
 <meta name="applicable-device" content="pc">
 ```
 
-* **转码申明：** 用百度打开网页可能会对其进行转码（比如贴广告），避免转码可添加如下meta
+* **转码申明：** 用百度打开网页可能会对其进行转码，避免转码可添加如下meta
 
 ```html
 <meta http-equiv="Cache-Control" content="no-siteapp" />
 ```
 
-* **规定360安全浏览器使用webki内核进行渲染**
-
-```html
-<meta name="renderer" content="webkit">
-```
 
 
 ### SEO优化
@@ -131,10 +165,27 @@ url="url" 后者代表当前PC页所对应的手机页URL，两者必须是一�
 <meta http-equiv="refresh" content="0;url=" />
 ```
 
+* **搜索引擎爬虫重访时间：** 如果页面不是经常更新，为了减轻搜索引擎爬虫对服务器带来的压力，可以设置一个爬虫的重访时间。如果重访时间过短，爬虫将按它们定义的默认时间来访问。
+
+```html
+<meta name="revisit-after" content="7 days" >
+```
+* **使用 Referer Meta 标签控制referer：** html 文档可以控制 http 请求中的 referer ，比如是否发送 referer、只发送 hostname 还是发送完整的 referer 等。
+```html
+<meta name="referrer" content="never,default,origin,always">
+<!--
+1.如果 referer-policy 的值为never：删除 http head 中的 referer；
+2.如果 referer-policy 的值为default：如果当前页面使用的是 https 协议，而正要加载的资源使用的是普通的 http 协议，则将 http header 中的 referer 置为空；
+3.如果 referer-policy 的值为 origin：只发送 origin 部分；
+4.如果 referer-policy 的值为 always：不改变http header 中的 referer 的值，注意：这种情况下，如果当前页面使用了 https 协议，而要加载的资源使用的是 http 协议，加载资源的请求头中也会携带 referer。
+-->
+```
 * **其他**
 
 ```html
 <meta name="author" content="author name" /> <!-- 定义网页作者 -->
+<meta name="copyright" content="lyl"> <!-- 定义网站版权 -->
+<meta name="generator" content="Sublime Text3"> <!-- 定义网站制作软件 -->
 ```
 
 ### 移动设备
@@ -179,13 +230,13 @@ url="url" 后者代表当前PC页所对应的手机页URL，两者必须是一�
 * **忽略数字自动识别为电话号码**
 
 ```html
-<meta content="telephone=no" name="format-detection" /> 
+<meta name="format-detection" content="telephone=no" /> 
 ```
 
 * **忽略识别邮箱**
 
 ```html
-<meta content="email=no" name="format-detection" />
+<meta name="format-detection" content="email=no" />
 ```
 
 * **添加智能 App 广告条 Smart App Banner：** 告诉浏览器这个网站对应的app，并在页面上显示下载banner(如下图)。
@@ -204,38 +255,6 @@ url="url" 后者代表当前PC页所对应的手机页URL，两者必须是一�
 <!-- 添加智能 App 广告条 Smart App Banner（iOS 6+ Safari） -->
 <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
 <!-- 设置苹果工具栏颜色 -->
-```
-
-```html
-<!-- iOS 图标 begin -->
-<link rel="apple-touch-icon-precomposed" href="/apple-touch-icon-57x57-precomposed.png"/>
-<!-- iPhone 和 iTouch，默认 57x57 像素，必须有 -->
-<link rel="apple-touch-icon-precomposed" sizes="114x114"
-    href="/apple-touch-icon-114x114-precomposed.png"/>
-<!-- Retina iPhone 和 Retina iTouch，114x114 像素，可以没有，但推荐有 -->
-<link rel="apple-touch-icon-precomposed" sizes="144x144"
-    href="/apple-touch-icon-144x144-precomposed.png"/>
-<!-- Retina iPad，144x144 像素，可以没有，但推荐有 -->
-<!-- iOS 图标 end -->
-```
-
-```html
-<!-- iOS 启动画面 begin -->
-<link rel="apple-touch-startup-image" sizes="768x1004" href="/splash-screen-768x1004.png"/>
-<!-- iPad 竖屏 768 x 1004（标准分辨率） -->
-<link rel="apple-touch-startup-image" sizes="1536x2008" href="/splash-screen-1536x2008.png"/>
-<!-- iPad 竖屏 1536x2008（Retina） -->
-<link rel="apple-touch-startup-image" sizes="1024x748" href="/Default-Portrait-1024x748.png"/>
-<!-- iPad 横屏 1024x748（标准分辨率） -->
-<link rel="apple-touch-startup-image" sizes="2048x1496" href="/splash-screen-2048x1496.png"/>
-<!-- iPad 横屏 2048x1496（Retina） -->
-<link rel="apple-touch-startup-image" href="/splash-screen-320x480.png"/>
-<!-- iPhone/iPod Touch 竖屏 320x480 (标准分辨率) -->
-<link rel="apple-touch-startup-image" sizes="640x960" href="/splash-screen-640x960.png"/>
-<!-- iPhone/iPod Touch 竖屏 640x960 (Retina) -->
-<link rel="apple-touch-startup-image" sizes="640x1136" href="/splash-screen-640x1136.png"/>
-<!-- iPhone 5/iPod Touch 5 竖屏 640x1136 (Retina) -->
-<!-- iOS 启动画面 end -->
 ```
 
 * **其他**
@@ -269,10 +288,6 @@ url="url" 后者代表当前PC页所对应的手机页URL，两者必须是一�
 <meta name="msapplication-TileImage" content="icon.png"/>
 <!-- Windows 8 磁贴图标 -->
 
-<link rel="alternate" type="application/rss+xml" title="RSS" href="/rss.xml"/>
-<!-- 添加 RSS 订阅 -->
-<link rel="shortcut icon" type="image/ico" href="/favicon.ico"/>
-<!-- 添加 favicon icon -->
 
 <!-- sns 社交标签 begin -->
 <!-- 参考微博API -->
