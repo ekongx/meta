@@ -80,28 +80,28 @@ Google Chrome Frame是Google推出的一款免费的Internet Explorer专用插�
 
 * **浏览器内核控制：** renderer是为双核浏览器准备的，用于指定双核浏览器默认以何种方式渲染页面,国内浏览器很多都是双内核（webkit和Trident），webkit内核高速浏览，IE内核兼容网页和旧版网站。而添加meta标签的网站可以控制浏览器首先选择何种内核进行渲染
 
-1. 若页面需默认用极速核，增加标签：
-```html
-<meta name="renderer" content="webkit">
-```
-2. 若页面需默认用ie兼容内核，增加标签：
-```hmtl
-<meta name="renderer" content="ie-comp">
-```
-3. 若页面需默认用ie标准内核，增加标签：
-```html
-<meta name="renderer" content="ie-stand">
-```
-4. 同时我们也可以同时指定多个内核名称，之间以符号”|”进行分隔,此时浏览器将会按照从左到右的先后顺序选择其具备的渲染内核来处理当前网页。
-```html
-<meta name="renderer" content="webkit|ie-comp|ie-stand">
-```
+    * 若页面需默认用极速核，增加标签：
+    ```html
+    <meta name="renderer" content="webkit">
+    ```
+    * 若页面需默认用ie兼容内核，增加标签：
+    ```hmtl
+    <meta name="renderer" content="ie-comp">
+    ```
+    * 若页面需默认用ie标准内核，增加标签：
+    ```html
+    <meta name="renderer" content="ie-stand">
+    ```
+    * 同时我们也可以同时指定多个内核名称，之间以符号”|”进行分隔,此时浏览器将会按照从左到右的先后顺序选择其具备的渲染内核来处理当前网页。
+    ```html
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    ```
 
-5. 规定360安全浏览器使用webki内核进行渲染
-
-```html
-<meta name="renderer" content="webkit">
-```
+    * 规定360安全浏览器使用webki内核进行渲染
+    
+    ```html
+    <meta name="renderer" content="webkit">
+    ```
 
 * **禁止浏览器从本地计算机的缓存中访问页面内容：** 不缓存页面(为了提高速度，一些浏览器会缓存浏览者浏览过的页面，通过下面的定义，浏览器一般不会缓存页面,而且浏览器无法脱机浏览。)
 
